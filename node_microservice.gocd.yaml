@@ -5,7 +5,7 @@ common:
     - exec:
         command: bash
         arguments:
-         - c
+         - -c
          - echo "Deployment to ${ENV_NAME} environment"
 
 pipelines:
