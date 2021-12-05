@@ -1,0 +1,19 @@
+---
+format version: 10
+# simple.gocd.yaml
+pipelines:
+  node_micro:
+    group: microservices
+    materials:
+      gitrepo:
+        git: https://github.com/Gatis-Rozenbergs/ci_course.git
+    stages:
+      - build:
+          jobs:
+            build:
+              tasks:
+               - exec:
+                   command: bash
+                   arguments: 
+                    - -c
+                    - echo "Building application"
