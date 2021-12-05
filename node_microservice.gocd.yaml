@@ -13,7 +13,7 @@ common:
         arguments:
          - -c
          - echo "Testing on ${ENV_NAME} environment"
-         
+
     - exec:
         command: bash
         arguments:
@@ -75,35 +75,53 @@ pipelines:
           environment_variables:
             ENV_NAME: dev
           jobs:
-            build: 
+            deploy: 
               tasks: *deploy-tasks
       - test-dev:
           environment_variables:
             ENV_NAME: dev
           jobs:
-            build: 
+            test: 
+              artifact:
+                - build:
+                  source: report_dev.html
+                  destination: tests-output
+              tabs:
+                TestReport: tests-output/report_dev.html
               tasks: *test-tasks
       - deploy-int:
           environment_variables:
             ENV_NAME: int
           jobs:
-            build: 
+            deploy: 
               tasks: *deploy-tasks
       - test-int: 
           environment_variables:
             ENV_NAME: int
           jobs:
-            build: 
+            test: 
+              artifact:
+                - build:
+                  source: report_int.html
+                  destination: tests-output
+              tabs:
+                TestReport: tests-output/report_int.html
               tasks: *test-tasks
       - deploy-prd:
           environment_variables:
             ENV_NAME: prd
           jobs:
-            build: 
+            deploy: 
               tasks: *deploy-tasks
       - test-prd:
           environment_variables:
             ENV_NAME: prd
           jobs:
-            build: 
+            test: 
+              artifact:
+                - build:
+                  source: report_prd.html
+                  destination: tests-output
+              tabs:
+                TestReport: tests-output/report_prd.html
               tasks: *test-tasks
