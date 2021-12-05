@@ -1,5 +1,5 @@
 ---
-format version: 10
+format_version: 10
 # simple.gocd.yaml
 pipelines:
   node_micro:
