@@ -1,7 +1,7 @@
 ---
 format_version: 10
 common:
-  deploy_tasks: &deploy_tasks
+  deploy_tasks: &deploy-tasks
     - exec:
         command: bash
         arguments:
@@ -30,7 +30,7 @@ pipelines:
             ENV_NAME: dev
           jobs:
             build: 
-              tasks: *deploy_tasks
+              tasks: *deploy-tasks
       - test-dev: 
           jobs:
             build: 
@@ -45,7 +45,7 @@ pipelines:
             ENV_NAME: int
           jobs:
             build: 
-              tasks: *deploy_tasks
+              tasks: *deploy-tasks
       - test-int: 
           jobs:
             build: 
@@ -56,11 +56,11 @@ pipelines:
                    - -c
                    - echo "Testing on INT"
       - deploy-prd:
-        environment_variables:
-            ENV_NAME: prod
+          environment_variables:
+            ENV_NAME: prd
           jobs:
             build: 
-              tasks: *deploy_tasks
+              tasks: *deploy-tasks
       - test-prd: 
           jobs:
             build: 
