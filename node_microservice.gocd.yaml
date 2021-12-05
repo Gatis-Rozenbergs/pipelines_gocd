@@ -1,6 +1,13 @@
 ---
 format_version: 10
-# simple.gocd.yaml
+common:
+  deploy_tasks: &deploy_tasks
+    - exec:
+        command: bash
+        arguments:
+         - c
+         - echo "Deployment to ${ENV_NAME} environment"
+
 pipelines:
   node_micro:
     group: microservices
@@ -19,14 +26,11 @@ pipelines:
                     - -c
                     - echo "Building application"
       - deploy-dev: 
+          environment_variables: 
+            ENV_NAME: dev
           jobs:
             build: 
-              tasks:
-               - exec: 
-                   command: bash
-                   arguments: 
-                   - -c
-                   - echo "Deployment to DEV"
+              tasks: *deploy_tasks
       - test-dev: 
           jobs:
             build: 
@@ -36,15 +40,12 @@ pipelines:
                    arguments: 
                    - -c
                    - echo "Testing on DEV"
-      - deploy-int: 
+      - deploy-int:
+          environment_variables: 
+            ENV_NAME: int
           jobs:
             build: 
-              tasks:
-               - exec: 
-                   command: bash
-                   arguments: 
-                   - -c
-                   - echo "Deployment to INT"
+              tasks: *deploy_tasks
       - test-int: 
           jobs:
             build: 
@@ -54,15 +55,12 @@ pipelines:
                    arguments: 
                    - -c
                    - echo "Testing on INT"
-      - deploy-prd: 
+      - deploy-prd:
+        environment_variables: 
+            ENV_NAME: prod
           jobs:
             build: 
-              tasks:
-               - exec: 
-                   command: bash
-                   arguments: 
-                   - -c
-                   - echo "Deployment to PRD"
+              tasks: *deploy_tasks
       - test-prd: 
           jobs:
             build: 
